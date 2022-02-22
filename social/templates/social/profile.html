@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block style %}
+    <link rel="stylesheet" href="{% static 'css/profile.css' %}">
+{% endblock style %}
+
+{% block content %}
+
+<div class="container-fluid">
+    <div>
+        <div class="details">
+            <div class="image">
+            {% if user.profile_pic %}
+                <img src="{{ user.profile_pic.url }}" alt="">
+            {% else %}
+                <img src="{% static 'images/profile-pic.png' %}" alt="">
+            {% endif %}
+            </div>
+            <div class="content">
+                <p class="username">{{ user.username }}</p>
+                <p class="post_count"><b>{{ posts.count }}</b> post</p>
+                    {% if user.bio %}
+                        <p class="description">{{ user.bio|capfirst }}</p>
+                    {% else %}
+                        <p class="description empty">No bio</p>
+                    {% endif %}
+                </p>
+            </div>
+            {% if request.user == user %}
+                <div class="edit">
+                    <a href="{% url 'edit' %}">Edit Profile</a>
+                </div>
+            {% endif %}
+        </div>
+        <div class="row posts">
+            {% for post in posts %}
+                <div class="col col-md-4 post">
+                    <a href="{% url 'post-detail' post.user.username post.id %}"><div class="image" style="background-image: url('{{ post.image.url }}');"></div></a>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

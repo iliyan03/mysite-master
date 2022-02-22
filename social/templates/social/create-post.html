@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block style %}
+    <style>
+        .form > form input{
+            background-color: rgb(38, 38, 38);
+            border: none;
+            border-radius: 10px;
+            color: white;
+        }
+    </style>
+{% endblock style %}
+
+{% block content %}
+
+<div class="container-fluid d-flex justify-content-center align-items-center" style="height: 100vh;">
+    <div class="form">
+        <form method="POST" enctype="multipart/form-data" style="color:white;">
+            {% csrf_token %}
+            {{ form|crispy }}
+            <div class="w-100 text-center">
+                <button type="submit" class="btn btn-success mt-3">Create Post</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+{% endblock content %}

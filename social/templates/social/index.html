@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+{% load static %}
+{% load custom_tags %}
+
+{% block style %}
+  <link rel="stylesheet" href="{% static 'css/index.css' %}">
+{% endblock style %}
+
+{% block content %}
+
+<div class="container-fluid">
+    <div class="suggested">
+        {% for account in suggested %}
+            <div class="suggested_account">
+                {% if account.profile_pic %}
+                    <img src="{{ account.profile_pic.url }}" alt="">
+                {% else %}
+                    <img src="{% static 'images/profile-pic.png' %}" alt="">
+                {% endif %}
+                <p><a href="{% url 'profile' account.username %}">{{account.username}}</a></p>
+            </div>
+        {% endfor %}
+
+    </div>
+    <div class="posts">
+        {% for post in posts %}
+
+            <div class="post">
+                <div class="account">
+                {% if post.user.profile_pic %}
+                    <img src="{{ post.user.profile_pic.url }}" alt="">
+                {% else %}
+                    <img src="{% static 'images/profile-pic.png' %}" alt="">
+                {% endif %}
+                    <div class="details">
+                        <a href="{% url 'profile' post.user.username %}" class="username">{{ post.user.username }}</a>
+                        <p class="mb-0">
+                        {% if post.user.bio %}
+                            {{ post.user.bio }}
+                        {% endif %}
+                    </p>
+                    </div>
+                </div>
+                <div class="image">
+                    <div style="background-image: url('{{ post.image.url }}');"></div>
+                </div>
+                <div class="controls">
+
+
+                    {% if post.id in request.user.like|get_value_in_qs:'post' %}
+                        <img src="{% static 'images/liked.png' %}" alt="Liked" id="like_icon_{{post.id}}" onclick="likePost({{ post.id }}, '{{ request.path }}')">
+                    {% else %}
+                        <img src="{% static 'images/like.png' %}" alt="Like" id="like_icon_{{post.id}}" onclick="likePost({{ post.id }}, '{{ request.path }}')">
+                    {% endif %}
+                        <a href="{% url 'post-detail' post.user.username post.id %}" class="mx-2"><img src="{% static 'images/comment.png' %}" alt="comment"></a>
+    
+                </div>
+                <div class="content">
+                    <p class="mb-0 description">
+                        {{ post.description }}
+                    </p>
+                </div>
+                {% if post.comment.count >= 1 %}
+                    <div class="comments">
+                        <a href="{% url 'post-detail' post.user.username post.id %}" class="all_comments">See all {{ post.comment.count }} comments</a>                    
+                        <div class="comment">
+                            <div>
+                                <p class="comments_user">{{ post.comment.last.user.username }}</p>
+                                <span class="comments_content">{{ post.comment.last.content }}</span>
+                            </div>
+                            <div class="created">
+                                <p>{{ post.comment.last.created|timesince }}</p>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+<script src="{% static 'js/index.js' %}"></script>
+
+{% endblock content %}

@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block style %}
+<style>
+    .form > form *{
+        color: white;
+        font-size: 20px;
+    }
+    .form > form input{
+        background-color: rgb(38, 38, 38);
+        border: none;
+        border-radius: 10px;
+    }
+</style>
+{% endblock style %}
+
+{% block content %}
+    <div class="container-fluid d-flex justify-content-center align-items-center" id="formContainer">
+        <div class="form">
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form|crispy }}
+                <div class="w-100 text-center">
+                    <button type="submit" class="btn btn-success mt-3">Edit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock content %}

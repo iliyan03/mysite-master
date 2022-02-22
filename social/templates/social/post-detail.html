@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+{% load static %}
+{% load custom_tags %}
+
+
+{% block style %}
+    <link rel="stylesheet" href="{% static 'css/post-detail.css' %}">
+{% endblock style %}
+
+{% block content %}
+
+    <div class="container-fluid">
+        <div class="post-container">
+            <div class="post-image">
+                <div style="background-image: url('{{ post.image.url }}');"></div>
+            </div>
+            <div class="post-content">
+                <div class="account">
+                    <div class="image">
+                    {% if post.user.profile_pic %}
+                        <img src="{{ post.user.profile_pic.url }}" alt="">
+                    {% else %}
+                        <img src="{% static 'images/profile-pic.png' %}" alt="">
+                    {% endif %}
+                    </div>
+                    <div class="content">
+                        <p class="username">{{ post.user.username }}</p>
+                        {% if post.user.bio %}
+                            <p class="description">
+                                {{ post.user.bio }}
+                            </p>
+                        {% else %}
+                            <p class="description empty">
+                                No bio
+                            </p>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="comments">
+                {% for comment in comments %}
+                    <div class="comment">
+                        <div class="comment-image">
+                            {% if comment.user.profile_pic %}
+                                <img src="{{ comment.user.profile_pic.url }}" alt="">
+                            {% else %}
+                                <img src="{% static 'images/profile-pic.png' %}" alt="">
+                            {% endif %}
+                        </div>
+                        <div class="comment-content">
+                            <p class="username">{{ comment.user.username }}</p>
+                            <span class="users-comment">{{ comment.content }}</span>
+                        </div>
+                    </div>
+                    <div class="created_before">
+                        <span>{{ comment.created|timesince }}</span>
+                    </div>
+                {% endfor %}
+
+                </div>
+                <div class="controls">
+                    <div>
+                        {% if post.id in request.user.like|get_value_in_qs:'post' %}
+                            <img src="{% static 'images/liked.png' %}" alt="Liked" id="like_icon_{{ post.id }}" onclick="likePost({{ post.id }}, '{{ request.path }}')">
+                        {% else %}
+                            <img src="{% static 'images/like.png' %}" alt="Like" id="like_icon_{{ post.id }}" onclick="likePost({{ post.id }}, '{{ request.path }}')">
+                        {% endif %}
+                        <img src="{% static 'images/comment.png' %}" alt="Comment" onclick="document.getElementById('comment').focus()">
+                    </div>
+                        {% if post in request.user.post.all %}
+                            <div class="creator_controls">
+                                <a href="{% url 'post-delete' request.user.username post.id %}" class="delete_btn">Delete</a>
+                            </div>
+                        {% endif %}
+
+                </div>
+                <div class="create-comment">
+                    <form method="POST">
+                        {% csrf_token %}
+                        <textarea type="text" id="comment" placeholder="Type your comment here" name="comment" required></textarea>
+                        <button type="submit" class="btn btn-primary">Comment</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
