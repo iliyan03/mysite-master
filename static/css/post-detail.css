@@ -6,12 +6,29 @@
     padding: 25px 0;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1180px) {
     .post-container{
         width: 100%;
         flex-direction: column;
+        align-items: center;
+    }
+    .post-image{
+        border-right: none !important;
     }
 }
+
+@media (max-width: 1670px) {
+    .post-container{
+        width: 80%;
+    }
+}
+
+@media (max-width: 1360px) {
+    .post-container{
+        width: 95%;
+    }
+}
+
 
 .post-image{
     width: fit-content;

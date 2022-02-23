@@ -16,6 +16,9 @@ class PostModelForm(forms.ModelForm):
             'description',
             'image',
         )
+        widgets = {
+            'description': forms.Textarea(attrs={'cols': 1, 'rows': 2}),
+        }
 
 class UserModelForm(forms.ModelForm):
     class Meta:
