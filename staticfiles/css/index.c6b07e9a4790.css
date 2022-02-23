@@ -1,0 +1,151 @@
+.container-fluid{
+    width: 50%;
+    margin: 0 auto;
+}
+
+.suggested{
+    width: 614px;
+    padding: 10px;
+    margin: 10px auto;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    border: 1px solid rgb(38, 38, 38);
+    color: white;
+}
+
+@media (max-width: 768px) {
+    .container-fluid{
+        width: 100%;
+        margin: 0;
+        padding: 0 !important;
+    }
+
+    .suggested{
+        width: 90%;
+    }
+}
+
+
+.suggested_account{
+    text-align: center;
+}
+
+.suggested_account > img{
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    margin-bottom: 5px;
+}
+
+.suggested_account > p{
+    margin-bottom: 0;
+}
+
+.suggested_account a{
+    font-weight: 500;
+    color: white;
+    text-decoration: none;
+}
+
+.posts > .post{
+    display: none;
+    width: 614px; 
+    margin: 10px auto;
+    border: 1px solid rgb(38, 38, 38);
+    color: white;
+}
+
+@media (max-width: 768px) {
+    .posts > .post{
+        width: 90%;
+        margin: 0 auto;
+    }
+}
+
+.account{
+    padding: 10px;
+    display: flex;
+    align-items: center;
+}
+
+.account > img{
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+}
+
+.account > div.details{
+    margin-left: 10px;
+}
+
+div.details > .username{
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+}
+
+div.post > div.image > div{
+    height: 768px; 
+    width: 614px; 
+    background-size: cover;
+    background-repeat: no-repeat; 
+    background-position: center;
+    background-color: black;
+}
+
+@media (max-width: 768px) {
+    div.post > div.image > div{
+        width: 100%;
+        height: 768px;
+    }
+}
+
+
+.controls{
+    display: flex;
+    padding: 10px;
+}
+
+.controls img{
+    cursor: pointer;
+    width: 30px;
+    height: 30px;
+    margin: 0 5px;
+}
+
+.content{
+    padding: 5px 10px 10px;
+}
+
+.comments{
+    padding: 5px 10px 10px
+}
+
+.comments > a{
+    text-decoration: none;
+    margin-bottom: 5px;
+    font-size: 14px;
+}
+
+.comments > .comment > div{
+    display: flex;
+}
+
+.comments_user{
+    font-weight: bold;
+    margin-bottom: 0;
+}
+
+.comments_content{
+    padding-left: 5px;
+}
+
+.created{
+    font-size: 12px;
+}
+
+.created, .all_comments{
+    text-transform: uppercase;
+    color: rgb(142, 142, 142);
+}
