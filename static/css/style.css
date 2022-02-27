@@ -79,3 +79,9 @@ div.nav-controls > a > img{
 ::-webkit-scrollbar-thumb:hover {
     background: rgb(195, 194, 194); 
 }
+
+.profile-pic{
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+}

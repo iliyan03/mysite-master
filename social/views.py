@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse, JsonResponse
 from django.contrib import messages
 from django.contrib.auth import get_user_model
+from django.contrib.auth.decorators import login_required
+
 
 from . import models, forms
 # Create your views here.
@@ -19,7 +21,7 @@ def index(request):
                 like_objects.get(post=post, user=request.user).delete()
             else:
                 like_objects.create(user=request.user, post=post)
-            return HttpResponse('Liked')
+            return HttpResponse(post.like.count())
         if 'search_for_user' in data:
             return redirect('profile', username=data.get('search_for_user'))
         if 'user_name' in data:
@@ -32,6 +34,7 @@ def index(request):
     }
     return render(request, "social/index.html", context)
 
+@login_required
 def profile(request, username):
     user = get_object_or_404(models.User, username=username)
     posts = user.post.order_by('-created')
@@ -68,6 +71,7 @@ def register(request):
     }
     return render(request, 'register.html', context)
 
+@login_required
 def create_post(request):
 
     if request.method == 'POST':
@@ -92,6 +96,8 @@ def create_post(request):
     context = {'form': form}
     return render(request, "social/create-post.html", context)
 
+
+@login_required
 def post_detail(request, username, id):
     post = get_object_or_404(models.Post, id=id, user__username=username)
     comments = post.comment.all()
@@ -106,7 +112,15 @@ def post_detail(request, username, id):
                 like_objects.get(post=post, user=request.user).delete()
             else:
                 like_objects.create(user=request.user, post=post)
-            return HttpResponse('Liked')
+            return HttpResponse(post.like.count())
+        if 'comment_like_id' in data:
+            comment_like_objects = models.Comment_like.objects.all()
+            comment = models.Comment.objects.get(id=data.get('comment_like_id'))
+            if comment_like_objects.filter(comment=comment, user=request.user).exists():
+                comment_like_objects.get(comment=comment, user=request.user).delete()
+            else:
+                comment_like_objects.create(user=request.user, comment=comment)
+            return HttpResponse(comment.comment_like.count())
         if 'search_for_user' in data:
             return redirect('profile', username=data.get('search_for_user'))
         if 'user_name' in data:
@@ -119,6 +133,7 @@ def post_detail(request, username, id):
     }
     return render(request, "social/post-detail.html", context)
 
+@login_required
 def post_delete(request, username, id):
     post = get_object_or_404(models.Post, id=id)
 
@@ -129,6 +144,7 @@ def post_delete(request, username, id):
 
     return redirect('profile', username)
 
+@login_required
 def edit(request):
     user = request.user
     if request.method == 'POST':

@@ -38,6 +38,16 @@
     margin-bottom: 5px;
 }
 
+.suggested_account > div{
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    margin-bottom: 5px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
 .suggested_account > p{
     margin-bottom: 0;
 }
@@ -114,6 +124,16 @@ div.post > div.image > div{
     margin: 0 5px;
 }
 
+.like_count{
+    padding-left: 10px;
+}
+
+.like_count a{
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+}
+
 .content{
     padding: 5px 10px 10px;
 }
@@ -133,6 +153,8 @@ div.post > div.image > div{
 }
 
 .comments_user{
+    text-decoration: none;
+    color: white;
     font-weight: bold;
     margin-bottom: 0;
 }

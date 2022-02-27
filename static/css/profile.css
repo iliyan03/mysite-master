@@ -10,7 +10,6 @@
     }
 }
 
-
 .details{
     display: flex;
     align-items: center;
@@ -21,7 +20,8 @@
     padding: 25px 50px;
 }
 
-.details > .image > img{
+.details > .image > img,
+.details > .image > div{
     border: 1px solid rgb(38, 38, 38);
     border-radius: 50%;
     width: 150px;

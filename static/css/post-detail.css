@@ -74,6 +74,12 @@
     height: 32px;
 }
 
+.post-content > .account > .image > div{
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+}
+
 .account > .content{
     margin: 0 10px;
 }
@@ -92,25 +98,32 @@
 
 .post-content > .comments{
     overflow-y: auto;
-    height: 78%;
+    height: 73.5%;
     padding: 16px;
 }
 
 .comment{
     display: flex;
     align-items: center;
+    justify-content: space-between;
     padding-top: 16px;
+}
+
+.comment > div{
+    display: flex;
+    align-items: center;
 }
 
 .comment:first-of-type{
     padding-top: 0 !important;
 }
 
-.comment > .comment-image{
+.comment-image{
     align-self: flex-start;
 }
 
-.comment > .comment-image > img{
+.comment-image > img,
+.comment-image > div{
     border-radius: 50%;
     width: 32px;
     height: 32px;
@@ -126,9 +139,17 @@
 }
 
 .comment-content > .username{
+    text-decoration: none;
+    color: white;
     margin: 0;
     padding-left: 3px;
     font-weight: 500;
+}
+
+.comment-like > img{
+    width: 15px;
+    height: 15px;
+    cursor: pointer;
 }
 
 .users-comment{
@@ -149,6 +170,18 @@
     width: 30px;
     height: 30px;
     margin: 0 10px;
+}
+
+.like_count{
+    height: 4.5%;
+    padding-left: 16px;
+    padding-bottom: 16px;
+}
+
+.like_count a{
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
 }
 
 .creator_controls > .delete_btn{

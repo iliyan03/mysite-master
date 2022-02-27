@@ -14,6 +14,8 @@ if (formContainer){
     window.addEventListener('resize', changeContainerHeight);
 }
 
+/* Like a post */
+    
 function likePost(id, url){
     const form = document.getElementById('like_form');
     const input = document.getElementById('input_id');
@@ -24,12 +26,10 @@ function likePost(id, url){
     $("#like_form_submit_btn").click()
 }
 
-/* Like a post */
-
 $(function() {
     $("#like_form").submit(function(event) {
-        let icon_id = 'like_icon_' + document.getElementById('input_id').getAttribute('value');
-        console.log(icon_id)
+        let post_id = document.getElementById('input_id').getAttribute('value');
+        let icon_id = 'like_icon_' + post_id;
         // Stop form from submitting normally
         event.preventDefault();
         var like_form = $(this);
@@ -43,6 +43,8 @@ $(function() {
             } else{
                 like_icon.setAttribute('src', "/static/images/like.png")
             }
+            let like_count = document.getElementById('like_count_' + post_id);
+            like_count.innerHTML = data;
         });
         // if failure:
         posting.fail(function(data) {

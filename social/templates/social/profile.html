@@ -12,7 +12,8 @@
         <div class="details">
             <div class="image">
             {% if user.profile_pic %}
-                <img src="{{ user.profile_pic.url }}" alt="">
+                <div class="profile-pic" style="background-image: url('{{ user.profile_pic.url }}');"></div>
+                <!-- <img src="{{ user.profile_pic.url }}" alt=""> -->
             {% else %}
                 <img src="{% static 'images/profile-pic.png' %}" alt="">
             {% endif %}
@@ -30,6 +31,8 @@
             {% if request.user == user %}
                 <div class="edit">
                     <a href="{% url 'edit' %}">Edit Profile</a>
+                    <a href="#">/</a>
+                    <a href="/logout">Logout</a>
                 </div>
             {% endif %}
         </div>

@@ -12,13 +12,14 @@
     <div class="container-fluid">
         <div class="post-container">
             <div class="post-image">
-                <div style="background-image: url('{{ post.image.url }}');"></div>
+                <div style="background-image: url('{{ post.image.url }}');" ondblclick="likePost({{ post.id }}, '{{ request.path }}')"></div>
             </div>
             <div class="post-content">
                 <div class="account">
                     <div class="image">
                     {% if post.user.profile_pic %}
-                        <img src="{{ post.user.profile_pic.url }}" alt="">
+                        <div class="profile-pic" style="background-image: url('{{ post.user.profile_pic.url }}');"></div>
+                        <!-- <img src="{{ post.user.profile_pic.url }}" alt=""> -->
                     {% else %}
                         <img src="{% static 'images/profile-pic.png' %}" alt="">
                     {% endif %}
@@ -39,20 +40,33 @@
                 <div class="comments">
                 {% for comment in comments %}
                     <div class="comment">
-                        <div class="comment-image">
-                            {% if comment.user.profile_pic %}
-                                <img src="{{ comment.user.profile_pic.url }}" alt="">
+                        <div>
+                            <div class="comment-image">
+                                {% if comment.user.profile_pic %}
+                                    <div class="profile-pic" style="background-image: url('{{ comment.user.profile_pic.url }}');"></div>
+                                    <!-- <img src="{{ comment.user.profile_pic.url }}" alt=""> -->
+                                {% else %}
+                                    <img src="{% static 'images/profile-pic.png' %}" alt="">
+                                {% endif %}
+                            </div>
+                            <div class="comment-content">
+                                <a href="{% url 'profile' comment.user.username %}" class="username">{{ comment.user.username }}</a>
+                                <span class="users-comment">{{ comment.content }}</span>
+                            </div>
+                        </div>
+                        <div class="comment-like">
+                            {% if comment.id in request.user.comment_like|get_value_in_qs:'comment' %}
+                                <img src="{% static 'images/liked.png' %}" alt="Liked" id="comment_like_icon_{{ comment.id }}" onclick="likeComment({{ comment.id }}, '{{ request.path }}')">
                             {% else %}
-                                <img src="{% static 'images/profile-pic.png' %}" alt="">
+                                <img src="{% static 'images/like.png' %}" alt="Like" id="comment_like_icon_{{ comment.id }}" onclick="likeComment({{ comment.id }}, '{{ request.path }}')">
                             {% endif %}
                         </div>
-                        <div class="comment-content">
-                            <p class="username">{{ comment.user.username }}</p>
-                            <span class="users-comment">{{ comment.content }}</span>
-                        </div>
-                    </div>
+                     </div>
+
                     <div class="created_before">
                         <span>{{ comment.created|timesince }}</span>
+                        /
+                        <span class="p-0"><span id="comment_{{comment.id}}_likes">{{ comment.comment_like.count }}</span> likes</span>
                     </div>
                 {% endfor %}
 
@@ -73,6 +87,16 @@
                         {% endif %}
 
                 </div>
+                {% if post.like.count > 0 %}
+                    <div class="like_count">
+                        <span>
+                            <a href="#" id="like_count_{{post.id}}">{{ post.like.count }}</a> likes
+                            {% if post.comment.count > 0 %}
+                             and <b>{{ post.comment.count }}</b> comments
+                            {% endif %}
+                        </span>
+                    </div>
+                {% endif %}
                 <div class="create-comment">
                     <form method="POST">
                         {% csrf_token %}
@@ -83,4 +107,7 @@
             </div>
         </div>
     </div>
+
+    <script src="{% static 'js/post_detail.js' %}"></script>
+
 {% endblock content %}

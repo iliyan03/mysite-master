@@ -8,12 +8,14 @@
 
 {% block content %}
 
+{% if request.user.is_authenticated %}
 <div class="container-fluid">
     <div class="suggested">
         {% for account in suggested %}
             <div class="suggested_account">
                 {% if account.profile_pic %}
-                    <img src="{{ account.profile_pic.url }}" alt="">
+                    <div style="background-image: url('{{ account.profile_pic.url }}');"></div>
+                    <!-- <img src="{{ account.profile_pic.url }}" alt=""> -->
                 {% else %}
                     <img src="{% static 'images/profile-pic.png' %}" alt="">
                 {% endif %}
@@ -42,7 +44,7 @@
                     </div>
                 </div>
                 <div class="image">
-                    <div style="background-image: url('{{ post.image.url }}');"></div>
+                    <div style="background-image: url('{{ post.image.url }}');" ondblclick="likePost({{ post.id }}, '{{ request.path }}')"></div>
                 </div>
                 <div class="controls">
 
@@ -55,6 +57,11 @@
                         <a href="{% url 'post-detail' post.user.username post.id %}" class="mx-2"><img src="{% static 'images/comment.png' %}" alt="comment"></a>
     
                 </div>
+                {% if post.like.count > 0 %}
+                    <div class="like_count">
+                        <span><a href="{% url 'post-detail' post.user.username post.id %}" id="like_count_{{post.id}}">{{ post.like.count }}</a> likes</span>
+                    </div>
+                {% endif %}
                 <div class="content">
                     <p class="mb-0 description">
                         {{ post.description }}
@@ -65,7 +72,7 @@
                         <a href="{% url 'post-detail' post.user.username post.id %}" class="all_comments">See all {{ post.comment.count }} comments</a>                    
                         <div class="comment">
                             <div>
-                                <p class="comments_user">{{ post.comment.last.user.username }}</p>
+                                <a href="{% url 'profile' post.comment.last.user.username %}" class="comments_user">{{ post.comment.last.user.username }}</a>
                                 <span class="comments_content">{{ post.comment.last.content }}</span>
                             </div>
                             <div class="created">
@@ -78,6 +85,7 @@
         {% endfor %}
     </div>
 </div>
+{% endif %}
 
 <script src="{% static 'js/index.js' %}"></script>
 
