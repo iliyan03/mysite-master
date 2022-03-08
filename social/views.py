@@ -26,7 +26,7 @@ def index(request):
         if 'search_for_user' in data:
             return redirect('profile', username=data.get('search_for_user'))
         if 'user_name' in data:
-            user_options = list(models.User.objects.filter(username__contains=data.get('user_name')).values('username'))
+            user_options = list(models.User.objects.filter(username__icontains=data.get('user_name')).values('username'))
             return JsonResponse({'user_options': user_options})
 
     context = {
@@ -45,7 +45,7 @@ def profile(request, username):
         if 'search_for_user' in data:
             return redirect('profile', username=data.get('search_for_user'))
         if 'user_name' in data:
-            user_options = list(models.User.objects.filter(username__contains=data.get('user_name')).values('username'))
+            user_options = list(models.User.objects.filter(username__icontains=data.get('user_name')).values('username'))
             return JsonResponse({'user_options': user_options})
 
 
@@ -92,7 +92,7 @@ def create_post(request):
         if 'search_for_user' in data:
             return redirect('profile', username=data.get('search_for_user'))
         if 'user_name' in data:
-            user_options = list(models.User.objects.filter(username__contains=data.get('user_name')).values('username'))
+            user_options = list(models.User.objects.filter(username__icontains=data.get('user_name')).values('username'))
             return JsonResponse({'user_options': user_options})
     else: 
         form = forms.PostModelForm()
@@ -127,7 +127,7 @@ def post_detail(request, username, id):
         if 'search_for_user' in data:
             return redirect('profile', username=data.get('search_for_user'))
         if 'user_name' in data:
-            user_options = list(models.User.objects.filter(username__contains=data.get('user_name')).values('username'))
+            user_options = list(models.User.objects.filter(username__icontains=data.get('user_name')).values('username'))
             return JsonResponse({'user_options': user_options})
 
     context = {
@@ -159,7 +159,7 @@ def edit(request):
         if 'search_for_user' in data:
             return redirect('profile', username=data.get('search_for_user'))
         if 'user_name' in data:
-            user_options = list(models.User.objects.filter(username__contains=data.get('user_name')).values('username'))
+            user_options = list(models.User.objects.filter(username__icontains=data.get('user_name')).values('username'))
             return JsonResponse({'user_options': user_options})
 
     else: 
