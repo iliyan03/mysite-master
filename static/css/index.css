@@ -42,6 +42,7 @@
     border-radius: 50%;
     width: 32px;
     height: 32px;
+    margin: auto;
     margin-bottom: 5px;
     background-position: center;
     background-repeat: no-repeat;
@@ -67,6 +68,15 @@
 }
 
 @media (max-width: 768px) {
+    .suggested{
+        justify-content: space-between;
+    }
+    .suggested_account:nth-of-type(4){
+        display: none;
+    }
+    .suggested_account a{
+        font-size: 14px;
+    }
     .posts > .post{
         width: 90%;
         margin: 0 auto;
