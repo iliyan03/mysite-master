@@ -8,14 +8,22 @@
 
 {% block content %}
 <div class="container-fluid d-flex justify-content-center align-items-center" style="height: 100vh;">
-    <div class="form">
-        <form method="POST">
-            {% csrf_token %}
-            {{ form|crispy }}
-            <div class="w-100 text-center">
-                <button type="submit" class="btn btn-success mt-3">Login</button>
-            </div>
-        </form>
-    </div>
+    {% if request.user.is_authenticated %}
+        <div style="text-align: center;">
+            <h1 style="color: white;">You're already logged in!</h1><br>
+            <a href="{% url 'home' %}" style=" color: white; font-size: 18px;">Go back to the home page.</a>
+        </div>
+    {% else %}
+        <div class="form">
+            <form method="POST">
+                {% csrf_token %}
+                {{ form|crispy }}
+                <div class="w-100 text-center">
+                    <button type="submit" class="btn btn-success mt-3">Login</button>
+                </div>
+            </form>
+        </div>
+    {% endif %}
 </div>
+
 {% endblock content %}
