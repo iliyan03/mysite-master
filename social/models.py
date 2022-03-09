@@ -41,4 +41,4 @@ class Comment_like(models.Model):
     comment = models.ForeignKey(Comment, on_delete=models.CASCADE, related_name="comment_like")
 
     def __str__(self):
-        return self.post.user.username
+        return self.comment.content
